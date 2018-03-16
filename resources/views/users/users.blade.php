@@ -10,7 +10,10 @@
                 {{ $user->name }}
             </div>
             <div>
+                @if (Auth::user()->name === $user->name)
                 <p>{!! link_to_route('users.show', 'View profile', ['id' => $user->id]) !!}</p>
+                @else <p>{!! link_to_action('WelcomeController@index', 'View profile', ['id' => $user->id]) !!}</p>
+                @endif
             </div>
         </div>
     </li>

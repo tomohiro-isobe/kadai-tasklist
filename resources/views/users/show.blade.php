@@ -17,7 +17,7 @@
                 <li role="presentation" class="{{ Request::is('users/' . $user->id) ? 'active' : '' }}"><a href="{{ route('users.show', ['id' => $user->id]) }}">Tasklist <span class="badge">{{ $count_tasks }}</span></a></li>
             
             </ul>
-            @if (count($tasks) > 0)
+            @if (count($tasks) > 0 && Auth::user()->name == $user->name)
                 @include('tasks.tasks', ['tasks' => $tasks])
             @endif
         </div>
