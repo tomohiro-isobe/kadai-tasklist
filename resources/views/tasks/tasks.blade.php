@@ -21,7 +21,7 @@
                     {!! Form::close() !!}
                 @endif
                 @if (Auth::user()->id == $task->user_id)
-                    {!! Form::model(['route' => ['tasks.update', $task->id], 'method' => 'put']) !!}
+                    {!! Form::open(['route' => ['tasks.update', $task->id], 'method' => 'put']) !!}
                         <div class="form-group">
                             {!! Form::label('status', 'ステータス:') !!}
                             {!! Form::text('status', null, ['class' => 'form-control']) !!}

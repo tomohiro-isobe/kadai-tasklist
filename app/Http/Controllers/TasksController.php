@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 
 use App\Task;
 
+
+
 class TasksController extends Controller
 {
     /**
@@ -97,11 +99,16 @@ class TasksController extends Controller
             'content' => 'required|max:255',
             ]);
             
+        $task = Task::find($id);
         
-        $request->user()->tasks()->create([
-            'content' => $request->content,
-            'status' => $request->status,
-            ]);
+        $task->status = $request->status;
+        $task->content = $request->content;
+        $task->created_at = $request->created_at;
+        $task->save();
+        // $request->user()->tasks()->create([
+        //     'content' => $request->content,
+        //     'status' => $request->status,
+        //     ]);
         
         return redirect('/');
     }
