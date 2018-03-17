@@ -1,25 +1,41 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row">
-        <aside class="col-xs-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">{{ $user->name }}</h3>
-                </div>
-                <div class="panel-body">
-                <img class="media-object img-rounded img-responsive" src="{{ Gravatar::src($user->email, 500) }}" alt="">
-                </div>
-            </div>
-        </aside>
-        <div class="col-xs-8">
-            <ul class="nav nav-tabs nav-justified">
-                <li role="presentation" class="{{ Request::is('users/' . $user->id) ? 'active' : '' }}"><a href="{{ route('users.show', ['id' => $user->id]) }}">Tasklist <span class="badge">{{ $count_tasks }}</span></a></li>
+
+ <div class="col-xs-6">
             
-            </ul>
-            @if (count($tasks) > 0 && Auth::user()->name == $user->name)
-                @include('tasks.tasks', ['tasks' => $tasks])
+          
+    @if (count($tasks) > 0 && Auth::user()->name == $user->name)
+        <ul class="media-left">
+            @foreach($tasks as $task)
+                 <?php $user = $task->user; ?>
+            <li class="media">
+                    <div class="media-left">
+                         <img class="media-object img-rounded" src="{{ Gravatar::src($user->email, 50) }}" alt="">
+                     </div>
+        <div class="media-body">
+                 <div>
+                    {{ $user->name, ['id' => $user->id] }}<span class="text-muted">>posted at {{ $task->created_at }} </span>
+                 </div>
+                 <div>
+                     <p>{!! nl2br(e($task->status)) !!} >> {!! nl2br(e($task->content)) !!}</p>
+                 </div>
+            </li>
+        </ul>
+                    {!! Form::model($task,['route' => ['tasks.update', $task->id], 'method' => 'put']) !!}
+                        <div class="form-group">
+                            {!! Form::label('status', 'ステータス:') !!}
+                            {!! Form::text('status', null, ['class' => 'form-control']) !!}
+                        </div>
+                        <div class="form-group">
+                            {!! Form::label('content', 'タスク:') !!}
+                            {!! Form::text('content', null, ['class' => 'form-control']) !!}
+                        </div>  
+                        {!! Form::submit('編集', ['class' => 'btn btn-info btn-xs']) !!}
+                    {!! Form::close() !!}
+                @endforeach
             @endif
-        </div>
+         </div>
     </div>
+    {!! $tasks->render() !!}
 @endsection
