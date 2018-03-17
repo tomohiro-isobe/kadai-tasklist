@@ -103,11 +103,11 @@ class TasksController extends Controller
         
         $task->status = $request->status;
         $task->content = $request->content;
-        $task->created_at = $request->created_at;
         $task->save();
         // $request->user()->tasks()->create([
         //     'content' => $request->content,
         //     'status' => $request->status,
+        //     'created_at => $request->created_at'
         //     ]);
         
         return redirect('/');

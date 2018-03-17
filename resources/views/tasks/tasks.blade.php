@@ -8,7 +8,7 @@
         <div class="media-body">
             <div>
                @if (Auth::user()->name == $user->name)
-                    {!! link_to_action('TasksController@show', $task->id, ['id' => $task->id]) !!}<span class="text-muted">posted at {{ $task->created_at }} </span>
+                    {!! link_to_action('TasksController@show', $task->id, ['id' => $task->id]) !!}
                @endif
             </div>
             <div>
